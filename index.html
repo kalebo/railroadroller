@@ -1,0 +1,93 @@
+<head>
+<style>
+.dice {
+	margin: 10px;
+	width: 30vh;
+	height: 30vh;
+	transition: all .3s;
+}
+
+.wrap {
+	display: flex;
+ 	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn {
+	border-radius: 12px;
+	border-style: solid;
+	border-width: .15em;
+	border-color: black;
+	letter-spacing: .15em;
+	text-transform: uppercase;
+	padding: 1em;
+	font-size: 1em;
+	font-family: arial;
+	background-color: white;
+	color: black;
+	transition: background-color .3s,color .3s,border .3s;
+}
+
+ .btn:hover {
+	background-color: black;
+	color: white;
+}
+
+.btn:focus {
+	outline: none;
+}
+
+</style>
+</head>
+<body>
+
+
+<script type="text/javascript">
+base = "dicefaces.svg#"
+roll = function(sides, min) { return Math.ceil(Math.random() * sides) + min}
+dice = document.getElementsByClassName("dice")
+round = 0
+
+rollall = function() {
+	round++
+	Array.prototype.forEach.call(dice, function(s) {
+		s.style.visibility=""
+		rot = roll(50, 0) * 90
+		while (s.data == rot) {
+			rot = roll(50, 0) * 90
+		}
+		s.data = rot
+		s.style.transform="rotate(" + rot + "deg)"
+		s.src=base+roll(6,0)
+	})
+
+	dice[roll(4,0) -1].src=base+roll(3, 6)
+}
+
+window.onkeyup = function(e) {
+	key = e.keyCode ? e.keyCode : e.which
+
+	if (key == 32) {
+		rollall()
+	}
+} 
+
+
+</script>
+<div class=center>
+<button class=btn onclick=rollall() >ROLL</button>
+</div>
+<div class=wrap onclick=rollall()>
+<img id=d1 class=dice style="visibility: hidden"/>
+<img id=d2 class=dice style="visibility: hidden"/>
+<img id=d3 class=dice style="visibility: hidden"/>
+<img id=d4 class=dice style="visibility: hidden"/>
+</div>
+
+</body>
